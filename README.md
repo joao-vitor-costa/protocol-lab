@@ -28,6 +28,8 @@ A aplicação HTTP sobe em `http://localhost:8080` e o servidor gRPC em `localho
 
 ### REST
 
+Teste o endpoint listando e criando mensagens:
+
 ```bash
 curl http://localhost:8080/api/messages
 curl -X POST http://localhost:8080/api/messages \
@@ -37,19 +39,29 @@ curl -X POST http://localhost:8080/api/messages \
 
 ### GraphQL
 
+Teste a consulta abaixo ou abra `http://localhost:8080/graphiql` no navegador:
+
 ```bash
 curl -X POST http://localhost:8080/graphql \
   -H 'Content-Type: application/json' \
   -d '{"query":"query { messages { id author content createdAt } }"}'
 ```
 
-Também é possível abrir `http://localhost:8080/graphiql` no navegador.
-
 ### gRPC/RPC
 
-Com `grpcurl` instalado:
+No Windows, instale o `grpcurl` pelo `winget` (use o ID retornado pela pesquisa):
 
-```bash
+```powershell
+winget search grpcurl
+winget install --id <ID_DO_GRPCURL> -e
+grpcurl --version
+```
+
+Com `grpcurl` instalado, liste os serviços, consulte mensagens e crie uma nova:
+
+```powershell
+grpcurl -plaintext localhost:9090 list
+grpcurl -plaintext localhost:9090 describe MessageRpc
 grpcurl -plaintext -import-path src/main/proto -proto message.proto -d '{}' localhost:9090 MessageRpc/ListMessages
 grpcurl -plaintext -import-path src/main/proto -proto message.proto -d '{"author":"gRPC","content":"Mensagem via RPC"}' localhost:9090 MessageRpc/CreateMessage
 ```
@@ -58,13 +70,21 @@ O contrato está em `src/main/proto/message.proto`.
 
 ### WebSocket
 
-Com `websocat` instalado:
+No Windows, instale o `websocat` pelo `winget` (use o ID retornado pela pesquisa):
 
-```bash
+```powershell
+winget search websocat
+winget install --id <ID_DO_WEBSOCAT> -e
+websocat --version
+```
+
+Abra dois terminais e conecte ambos ao endpoint:
+
+```powershell
 websocat ws://localhost:8080/ws/messages
 ```
 
-Digite qualquer texto no terminal para publicar uma mensagem em broadcast aos clientes conectados.
+Digite qualquer texto em um terminal. A mensagem deverá aparecer no outro, demonstrando o broadcast aos clientes conectados.
 
 ## Estrutura
 
