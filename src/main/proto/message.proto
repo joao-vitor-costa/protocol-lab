@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "dev.protocol.lab.grpc.proto";
+option java_outer_classname = "MessageProto";
+
+service MessageRpc {
+  rpc ListMessages(ListMessagesRequest) returns (ListMessagesResponse);
+  rpc CreateMessage(CreateMessageRequest) returns (MessageReply);
+}
+
+message ListMessagesRequest {}
+
+message ListMessagesResponse {
+  repeated MessageReply messages = 1;
+}
+
+message CreateMessageRequest {
+  string author = 1;
+  string content = 2;
+}
+
+message MessageReply {
+  string id = 1;
+  string author = 2;
+  string content = 3;
+  string created_at = 4;
+}

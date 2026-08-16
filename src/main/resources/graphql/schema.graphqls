@@ -1,0 +1,19 @@
+type Message {
+  id: ID!
+  author: String!
+  content: String!
+  createdAt: String!
+}
+
+input MessageInput {
+  author: String!
+  content: String!
+}
+
+type Query {
+  messages: [Message!]!
+}
+
+type Mutation {
+  createMessage(input: MessageInput!): Message!
+}
