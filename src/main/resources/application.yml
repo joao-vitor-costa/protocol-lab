@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: protocol-lab
+  graphql:
+    graphiql:
+      enabled: true
+
+grpc:
+  server:
+    port: 9090
